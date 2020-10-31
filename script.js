@@ -44,6 +44,15 @@ function getWeather(cityName) {
            currentUvEl.append(UVIndex) ;
         });
 
+        var cityID = data.id;
+        var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?id=" + cityID + "&appid=" + APIKey;
+        fetch(forecastURL).then(function(response){
+           return response.json()
+        })
+        .then(function(data){
+
+        })
+
 
      })
 
