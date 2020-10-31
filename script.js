@@ -31,6 +31,19 @@ function getWeather(cityName) {
         currentHumidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
         currentWindSpeedEl.innerHTML = "Wind Speed: " + data.wind.speed + "mph";
 
+        var uvGetURL = "https://api.openweathermap.org/data/2.5/uvi/forecast?lat=" + lat + "&lon=" + lon + "&appid=" + APIKey + "&cnt=1";
+        fetch(uvGetURL)
+        .then(function(response){
+           return response.json()
+        })
+        .then(function(data){
+           var UVIndex = document.createElement("span");
+           UVIndex.setAttribute("class", "badge badge-danger");
+           UVIndex.innerHTML = data[0].value;
+           currentUvEl.innerHTML = "UV Index: ";
+           currentUvEl.append(UVIndex) ;
+        });
+
 
      })
 
