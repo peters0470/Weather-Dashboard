@@ -5,8 +5,8 @@
 A website to give the user the current weather and 5 day forecast of a city. Searches are saved and are able to be viewed in the future. 
 
 ## Built with 
-*HTML with Bootstrap for styling
-*JavaScript
+* HTML with Bootstrap for styling
+* JavaScript
 
 ## Website
 
