@@ -42,17 +42,21 @@ function getWeather(cityName) {
         .then(function(data){
            var UVIndex = document.createElement("span");
            UVIndex.innerHTML = data[0].value;
+           let indexValue = data[0].value;
            currentUvEl.innerHTML = "UV Index: ";
            currentUvEl.append(UVIndex);
-           console.log(data[0].value);
-           if (0 < UVIndex < 3) {
+          
+           if (0 < indexValue && indexValue < 3) {
               UVIndex.setAttribute("class", "badge badge-success");
+              console.log("case 1 has activated");
            }
-           if (3 < UVIndex < 7) {
+           if (3 < indexValue && indexValue < 7) {
               UVIndex.setAttribute("class", "badge badge-warning");
+              console.log("case 2 has been activated");
            } 
-           if (7 < UVIndex < 10) {
+           if (7 < indexValue && indexValue < 10) {
               UVIndex.setAttribute("class", "badge badge-danger");
+              console.log("case 3 has been activated");
            }
            
         });
