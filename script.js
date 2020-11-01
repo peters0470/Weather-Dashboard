@@ -11,7 +11,7 @@ var currentUvEl = document.getElementById("UV-index");
 var historyEl = document.getElementById("history");
 
 function getWeather(cityName) {
-    var weatherURL = "https://api.openweathermap.org/data/2.5.weather?q=" + cityName + "&appid=" + APIKey;
+    var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
     fetch(weatherURL).then(function(response) {
         return response.json()
      })
@@ -19,7 +19,7 @@ function getWeather(cityName) {
 
         var currentDate = new Date(data.dt*1000);
         var day = currentDate.getDate();
-        var month = currentDate.getMonth();
+        var month = currentDate.getMonth() + 1;
         var year = currentDate.getFullYear();
         var weatherPic = data.weather[0].icon;
         var lon = data.coord.lon;
@@ -51,11 +51,33 @@ function getWeather(cityName) {
         })
         .then(function(data){
 
+         var fiveDayForecast = document.querySelectorAll(".forecast");
+         for (i = 0; i < fiveDayForecast.length; i++) {
+
+            fiveDayForecast[i].innerHTML = "";
+            var fiveDayIndex = i*8 + 4;
+            var fiveDayDate = new Date(data.list[fiveDayIndex].dt * 1000);
+            var fiveDayYear = fiveDayDate.getFullYear();
+            var fiveDayMonth = fiveDayDate.getMonth() + 1;
+            var fiveDayDay = fiveDayDate.getDate();
+
+            var fiveDayDateEl = document.createElement("p");
+            fiveDayDateEl.setAttribute("class", "mt-3 mb-0 five-day-date");
+            fiveDayDateEl.innerHTML = fiveDayMonth + "/" + fiveDayDay + "/" + fiveDayYear;
+            fiveDayForecast[i].append(fiveDayDateEl);
+
+         }
+
         })
 
 
      })
 
-}
+     
 
+}
+searchCityEl.addEventListener("click", function(){
+   var searchCity = cityEl.value;
+   getWeather(searchCity);
+})
   
