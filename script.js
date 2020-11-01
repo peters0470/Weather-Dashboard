@@ -28,6 +28,7 @@ function getWeather(cityName) {
         weatherPicEl.setAttribute("src","https://openweathermap.org/img/wn/" + weatherPic + "@2x.png");
         weatherPicEl.setAttribute("alt",data.weather[0].description);
         cityNameEl.innerHTML = data.name + " (" + month + "/" + day + "/" + year + ") ";
+        currentTemperatureEl.innerHTML = "Temperature: " + convertToFahrenheit(data.main.temp) + " &#176F"
         currentHumidityEl.innerHTML = "Humidity: " + data.main.humidity + "%";
         currentWindSpeedEl.innerHTML = "Wind Speed: " + data.wind.speed + "mph";
 
@@ -66,18 +67,29 @@ function getWeather(cityName) {
             fiveDayDateEl.innerHTML = fiveDayMonth + "/" + fiveDayDay + "/" + fiveDayYear;
             fiveDayForecast[i].append(fiveDayDateEl);
 
+            var forecastedWeatherEl = document.createElement("img");
+            forecastedWeatherEl.setAttribute("src","https://openweathermap.org/img/wn/" + data.list[fiveDayIndex].weather[0].icon + "@2x.png");
+            forecastedWeatherEl.setAttribute("alt", data.list[fiveDayIndex].weather[0].description);
+            fiveDayForecast[i].append(forecastedWeatherEl);
+
+            var forecastedTemperatureEl = document.createElement("p");
+            forecastedTemperatureEl.innerHTML = "Temp: " + convertToFahrenheit(data.list[fiveDayIndex].main.temp) + "&#176F";
+            fiveDayForecast[i].append(forecastedTemperatureEl);
+
+            var forecastedHumidityEl = document.createElement("p");
+            forecastedHumidityEl.innerHTML = "Humidity: " + data.list[fiveDayIndex].main.humidity + "%";
+            fiveDayForecast[i].append(forecastedHumidityEl);
+
          }
-
         })
-
-
      })
-
-     
-
 }
 searchCityEl.addEventListener("click", function(){
    var searchCity = cityEl.value;
    getWeather(searchCity);
 })
+
+function convertToFahrenheit(k) {
+   return Math.floor((k - 273.15) * 1.8 + 32);
+}
   
