@@ -9,6 +9,7 @@ var currentHumidityEl = document.getElementById("humidity");
 var currentWindSpeedEl = document.getElementById("wind-speed");
 var currentUvEl = document.getElementById("UV-index");
 var historyEl = document.getElementById("history");
+var searchHistory = JSON.parse(localStorage.getItem("search")) || [];
 
 function getWeather(cityName) {
     var weatherURL = "https://api.openweathermap.org/data/2.5/weather?q=" + cityName + "&appid=" + APIKey;
@@ -87,7 +88,17 @@ function getWeather(cityName) {
 searchCityEl.addEventListener("click", function(){
    var searchCity = cityEl.value;
    getWeather(searchCity);
+   if (searchHistory.includes(searchCity) == false) {
+      searchHistory.push(searchCity);
+   }
+   localStorage.setItem("search",JSON.stringify(searchHistory));
 })
+
+clearHistoryEl.addEventListener("click",function() {
+   searchHistory = [];
+   localStorage.setItem("search",JSON.stringify(searchHistory))
+})
+
 
 function convertToFahrenheit(k) {
    return Math.floor((k - 273.15) * 1.8 + 32);
